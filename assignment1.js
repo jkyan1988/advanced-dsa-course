@@ -270,17 +270,16 @@ class BinarySearchTree {
             if (value < current.value) {
                 if (value === current.left.value) {
                     current.left = null;
-                    return this;
                 }
                 current = current.left;
             } else if (value > current.value) {
                 if (value === current.right.value) {
                     current.right = null;
-                    return this;
                 }
                 current = current.right;
             }
         }
+        return this;
     }
 }
 
