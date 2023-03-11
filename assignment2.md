@@ -125,18 +125,22 @@ SOLUTION: <br>
         same(tree1, tree2) {
                 let firstTreeNode = tree1.root;
                 let secondTreeNode = tree2.root;
-                let queue = [[firstTreeNode, secondTreeNode]];
+                let visited = [];
+                let visited2 = [];
 
-                while (queue.length) {
-                let [firstTreeNode, secondTreeNode] = queue.shift();
-                if (!firstTreeNode && !secondTreeNode) continue;
-                if (!firstTreeNode || !secondTreeNode) return false;
-                if (firstTreeNode.value === secondTreeNode.value) {
-                        queue.push([firstTreeNode.left, secondTreeNode.left]);
-                        queue.push([firstTreeNode.right, secondTreeNode.right]);
-                } else {
-                        return false;
+                function traverse(node) {
+                        if (node.left) traverse(node.left);
+                        if (node.right) traverse(node.right);
+                        visited.push(node.value);
                 }
+
+                function traverse2(node) {
+                        if (node.left) traverse2(node.left);
+                        if (node.right) traverse2(node.right);
+                        visited2.push(node.value);
                 }
-                return true;
-        }
+                
+                traverse(firstTreeNode);
+                traverse2(secondTreeNode);
+                return visited.toString() === visited2.toString();
+    }
