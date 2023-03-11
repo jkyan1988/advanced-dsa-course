@@ -69,33 +69,92 @@ class BinarySearchTree {
         }
         return false;
     }
+
+    countLeafs() {
+        let node = this.root
+        let queue = [node]
+        let counter = 0;
+
+        if (!node) return counter;
+
+        while (queue.length) {
+            node = queue.shift();
+            if (node.left === null && node.right === null) {
+                counter++;
+            }
+            if (node.left) queue.push(node.left);
+            if (node.right) queue.push(node.right);
+        }
+        return counter;
+    }
+
+    countOdds(tree) {
+        let visited = [];
+        let node = this.root;
+
+        function traverse(node) {
+            if (node.left) traverse(node.left);
+            if (node.value % 2 !== 0) visited.push(node.value)
+            if (node.right) traverse(node.right);
+        }
+
+        traverse(node);
+
+        return { nodes: visited, count: visited.length }
+    }
+
+    same(tree1, tree2) {
+        let firstTreeNode = tree1.root;
+        let secondTreeNode = tree2.root;
+        let visited = [];
+        let visited2 = [];
+
+        function traverse(node) {
+            if (node.left) traverse(node.left);
+            if (node.right) traverse(node.right);
+            visited.push(node.value);
+        }
+
+        function traverse2(node) {
+            if (node.left) traverse2(node.left);
+            if (node.right) traverse2(node.right);
+            visited2.push(node.value);
+        }
+        traverse(firstTreeNode);
+        traverse2(secondTreeNode);
+        return visited.toString() === visited2.toString();
+    }
 }
 
+
 // Challenge 1
-var tree = new BinarySearchTree();
-tree.insert(8);
-tree.insert(3);
-tree.insert(1);
-tree.insert(6);
-tree.insert(4);
-tree.insert(7);
-tree.insert(10);
-tree.insert(14);
-tree.insert(13);
-tree.countLeafs(tree)
+
+// var tree = new BinarySearchTree();
+// tree.insert(8);
+// tree.insert(3);
+// tree.insert(1);
+// tree.insert(6);
+// tree.insert(4);
+// tree.insert(7);
+// tree.insert(10);
+// tree.insert(14);
+// tree.insert(13);
+
+// console.log(tree.countLeafs(tree)) // 4
+
 
 // Challenge 2
-var tree = new BinarySearchTree();
-tree.insert(8);
-tree.insert(3);
-tree.insert(1);
-tree.insert(6);
-tree.insert(4);
-tree.insert(7);
-tree.insert(10);
-tree.insert(14);
-tree.insert(13);
-tree.countOdds(tree)
+// var tree = new BinarySearchTree();
+// tree.insert(8);
+// tree.insert(3);
+// tree.insert(1);
+// tree.insert(6);
+// tree.insert(4);
+// tree.insert(7);
+// tree.insert(10);
+// tree.insert(14);
+// tree.insert(13);
+// console.log(tree.countOdds(tree))
 
 // Challenge 3
 var tree1 = new BinarySearchTree();
@@ -106,4 +165,4 @@ tree1.insert(1);
 tree2.insert(8);
 tree2.insert(3);
 tree2.insert(1);
-tree1.same(tree1, tree2)
+console.log(tree1.same(tree1, tree2))

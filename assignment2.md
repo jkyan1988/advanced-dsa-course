@@ -25,6 +25,29 @@
         tree.countLeafs(tree)
 
 <br>
+
+SOLUTION:<br>
+
+        countLeafs() {
+                let node = this.root
+                let queue = [node]
+                let counter = 0;
+
+                if (!node) return counter;
+
+                while (queue.length) {
+
+                        node = queue.shift();
+
+                        if (node.left === null && node.right === null) {
+                                counter++;
+                        }
+                        if (node.left) queue.push(node.left);
+                        if (node.right) queue.push(node.right);
+                }
+                return counter;
+        }
+<br>
 <strong>Challenge 2: Please solve this problem using either BFS or DFS. </strong><br>
 <h5>Given a binary tree, create a method called countOdds(tree) that returns a object that has a SORTED list of all odd nodes and count. </h5><br>
 
@@ -56,6 +79,24 @@
         tree.countOdds(tree)
 
 <br>
+SOLUTION:<br>
+
+        countOdds(tree) {
+                let visited = [];
+                let node = this.root;
+
+                function traverse(node) {
+                        if (node.left) traverse(node.left);
+                        if (node.value % 2 !== 0) visited.push(node.value)
+                        if (node.right) traverse(node.right);
+                }
+
+                traverse(node);
+
+                return { nodes: visited, count: visited.length }
+        }
+
+<br>
 <h5>Challenge 3: Please solve this problem using either BFS or DFS. </h5><br>
 <h5>Given two binary trees, create a method called same(tree1, tree2) that returns true or false if the two binary trees are the same!</h5><br>
 <img src="Challenge3.png" alt="Challenge 3">
@@ -78,4 +119,24 @@
         tree2.insert(3);
         tree2.insert(1);
         tree1.same(tree1, tree2)
+<br>
+SOLUTION: <br>
 
+        same(tree1, tree2) {
+                let firstTreeNode = tree1.root;
+                let secondTreeNode = tree2.root;
+                let queue = [[firstTreeNode, secondTreeNode]];
+
+                while (queue.length) {
+                let [firstTreeNode, secondTreeNode] = queue.shift();
+                if (!firstTreeNode && !secondTreeNode) continue;
+                if (!firstTreeNode || !secondTreeNode) return false;
+                if (firstTreeNode.value === secondTreeNode.value) {
+                        queue.push([firstTreeNode.left, secondTreeNode.left]);
+                        queue.push([firstTreeNode.right, secondTreeNode.right]);
+                } else {
+                        return false;
+                }
+                }
+                return true;
+        }
