@@ -9,6 +9,7 @@ This is directed-unweighted.<br>
 <img src="graph4.png" alt="Graph 4"><br><br> 
 
 <h3>Challenge 2: Define what vertices and edges mean to you. </h3><br> 
+Vertices are like nodes or points to go to and edges are the connections between the nodes or points. <br> <br> 
 
 <h3>Challenge 3: You were just hired as a backend engineer for a new start-up to compete with LinkedIn, and your 
 first task as a engineer was to create a undirected, unweighted graph of the first 4 users of the website. Create a
@@ -35,3 +36,51 @@ Should look like this:
 - Tom Brady: [‘Tony Kim’]
 - Tony Kim: [‘Patrick Mahomes’, ‘Tom Brady’]
 - Patrick Mahomes: []
+
+SOLUTION: <br>
+
+            class Graph {
+                constructor() {
+                    this.adjList = {};
+                }
+
+                addVertex(vertex) {
+                    if (!this.adjList[vertex]) this.adjList[vertex] = [];
+                }
+
+                addEdge(v1, v2) {
+                    this.adjList[v1].push(v2);
+                    this.adjList[v2].push(v1);
+                }
+
+                removeEdge(v1, v2) {
+                    this.adjList[v1] = this.adjList[v1].filter(v => v !== v2);
+                    this.adjList[v2] = this.adjList[v2].filter(v => v !== v1);
+                }
+
+                removeVertex(vertex) {
+                    while (this.adjList[vertex].length) {
+                        const adjVertex = this.adjList[vertex].pop();
+
+                        this.removeEdge(vertex, adjVertex);
+                    }
+
+                    delete this.adjList[vertex];
+                }
+
+            }
+
+            const g = new Graph();
+
+            g.addVertex('Tom Brady')
+            g.addVertex('Tony Kim')
+            g.addVertex('Patrick Mahomes')
+            g.addVertex('Lebron James')
+            g.addEdge('Tom Brady', 'Lebron James')
+            g.addEdge('Tom Brady', 'Tony Kim')
+            g.addEdge('Tony Kim', 'Patrick Mahomes')
+            g.addEdge('Tony Kim', 'Lebron James')
+            g.addEdge('Patrick Mahomes', 'Lebron James')
+            g.removeVertex('Lebron James')
+
+            console.log(g)
