@@ -66,7 +66,7 @@ Solution:
                 })
         }
 
-        console.log(g.breadthFirst("1")) // [ '1', '3', '5' ]
+        console.log(g.breadthFirst("1")) // [ '2', '4', '6' ]
 
 
 <h3>Challenge 3:</h3>
